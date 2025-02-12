@@ -29,14 +29,27 @@ def fetch_building_data(building_id):
 
 
 def save_data_to_file(building_id, data):
-    filename = f"{building_id}.ehr.json"
+    filename = f"data/{building_id}.ehr.json"
     with open(filename, "w") as file:
         json.dump(data, file, indent=4)
     print(f"Data saved to {filename}")
 
 
 if __name__ == "__main__":
-    building_ids = ["101015900", "101020224"]
+    building_ids = [
+        "101034562",
+        "120852397",
+        "120852693",
+        "120819739",
+        "120819920",
+        "120819932",
+        "101010780",
+        "101020597",
+        "101022928",
+        "101025833",
+        "101034439",
+        "101034567"
+    ]
     for building_id in building_ids:
         print(f"Fetching data for Building ID: {building_id}")
         data = fetch_building_data(building_id)
