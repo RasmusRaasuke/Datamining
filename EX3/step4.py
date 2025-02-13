@@ -57,11 +57,32 @@ def extract_wanted_data_from_files(fields):
     return data
 
 
-def write_data_to_csv(fields, data, filename):
+def write_data_to_csv(data, filename, fields=[]):
     with open(filename, "w", newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=fields)
-        writer.writeheader()
+        if isinstance(data[0], dict):
+            writer = csv.DictWriter(f, fieldnames=fields)
+            writer.writeheader()
+        else:
+            writer = csv.writer(f)
         writer.writerows(data)
+
+
+def normalize_values(fields, data):
+    for field in fields:
+        values = []
+        for file_data in data:
+            values.append(file_data[field])
+        
+        max_value = max(values)
+        min_value = min(values)
+
+        new_values= []
+        for item in values:
+            normalized = (item - min_value) / (max_value - min_value)
+            new_values.append(normalized)
+        
+        for index, value in enumerate(new_values):
+            data[index][field] = value
 
 
 def build_similarity_matrix(fields, data):
@@ -97,14 +118,12 @@ if __name__ == "__main__":
     ]
     
     data = extract_wanted_data_from_files(fields)
-    for file in data:
-        print(file)
     
     dataset_fields = fields.copy()
     dataset_fields.insert(0, "ehrKood")
-    write_data_to_csv(dataset_fields, data, "dataset.csv")
+    write_data_to_csv(data, "dataset.csv", fields=dataset_fields)
     
+    normalize_values(fields, data)
+   
     similarity_matrix = build_similarity_matrix(fields, data)
-    
-    for item in similarity_matrix:
-        print(item)
+    #write_data_to_csv(similarity_matrix, "similarity_matrix.csv")
