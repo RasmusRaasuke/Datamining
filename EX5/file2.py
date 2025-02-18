@@ -64,9 +64,14 @@ if __name__ == "__main__":
                     items.append(f"{col}_{val}")
         transactions.append(items)
 
-    with open(OUTPUT_FIMI_FILE, "w") as f:
+    with open(OUTPUT_FIMI_FILE, "w", encoding="utf-8") as f:
         for trans in transactions:
             line = " ".join(trans)
             f.write(line + "\n")
 
-    os.system(f"./apriori {OUTPUT_FIMI_FILE} output2.txt")
+
+    if os.name == "nt":
+        os.system(f".\\apriori -ts -s40 {OUTPUT_FIMI_FILE} output2_sets.txt")
+        os.system(f".\\apriori -tr -c90 {OUTPUT_FIMI_FILE} output2_rules.txt")
+    else:
+        os.system(f"./apriori {OUTPUT_FIMI_FILE} output2.txt")

@@ -3,7 +3,7 @@ import os
 
 
 def write_txt(filename, content):
-    with open(filename, "w") as f:
+    with open(filename, "w", encoding="utf-8") as f:
         f.writelines(content)
 
 
@@ -28,4 +28,9 @@ if __name__ == "__main__":
 
     write_txt("input1.txt", carts)
 
-    os.system("./apriori input1.txt output1.txt ")
+    if os.name == "nt":
+        os.system(f".\\apriori -ts -s12 input1.txt output1_sets.txt")
+        os.system(f".\\apriori -tr -c60 input1.txt output1_rules.txt")
+    else:
+        os.system(f"./apriori -ts -s12 input1.txt output1_sets.txt")
+        os.system(f"./apriori -tr -s4 input1.txt output1_rules.txt")

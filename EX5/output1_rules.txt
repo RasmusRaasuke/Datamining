@@ -1,0 +1,8 @@
+lihaproduktid <- jogurtitooted (12.3762, 60)
+lihaproduktid <- külmutatud_pooltooted (13.8614, 60.7143)
+lihaproduktid <- kilekotid (13.3663, 62.963)
+pant_0.5 <- õlled (14.8515, 63.3333)
+lihaproduktid <- õlled (14.8515, 60)
+piim <- koored saiad (11.8812, 66.6667)
+piim <- leivad saiad (14.3564, 65.5172)
+saiad <- leivad piim (14.3564, 65.5172)
